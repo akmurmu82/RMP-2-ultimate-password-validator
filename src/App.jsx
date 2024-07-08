@@ -1,34 +1,49 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useEffect, useState } from "react";
+// import reactLogo from "./assets/react.svg";
+// import viteLogo from "/vite.svg";
 import "./App.css";
+import { Box, Input, Text } from "@chakra-ui/react";
+import WarningCont from "./WarningCont";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [password, setPassword] = useState("");
+  // const [warning, setWarning] = useState("");
+  const [rules, setRules] = useState({
+    r1: null,
+    r2: null,
+    r3: null,
+    r4: null,
+    r5: null,
+  });
+  function handleChange(e) {
+    setPassword(e.target.value);
+  }
+  useEffect(() => {
+    validate(password);
+  }, [password]);
+
+  function validate(password) {
+    if (password.length < 5) {
+      setRules({ ...rules, r1: false });
+    } else if(password.split("").some(char=> char)) {
+    }
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Box>
+      <Text fontSize={20}>Please choose a password</Text>
+      <Input
+        placeholder="Enter password"
+        value={password}
+        w={"fit-content"}
+        fontSize={20}
+        p={15}
+        mb={5}
+        onChange={handleChange}
+      ></Input>
+      {/* <Text>{warning}</Text> */}
+      <WarningCont rules={rules} />
+    </Box>
   );
 }
 
