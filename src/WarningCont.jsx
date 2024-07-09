@@ -3,32 +3,20 @@ import WarningCard from "./component/WarningCard";
 import { PropTypes } from "prop-types";
 
 function WarningCont({ rules }) {
-  console.log(rules);
-  console.log(Object.values(rules));
   return (
     <Flex wrap={"wrap"} gap={5}>
-      {Object.values(rules).map((rule) => {
-        if (rule !== null) {
+      {Object.values(rules).map(({ id, desc, validated }) => {
+        if (validated !== null) {
           return (
             <WarningCard
-              key={rule}
-              number={1}
-              desc="Your password must be at least 5 characters."
-              isValidated={false}
+              key={id}
+              number={id}
+              desc={desc}
+              isValidated={validated}
             />
           );
         }
       })}
-      {/* <WarningCard
-        number={1}
-        desc="Your password must be at least 5 characters."
-        isValidated={false}
-      />
-      <WarningCard
-        number={2}
-        desc="Your password must be at least 5 characters."
-        isValidated={true}
-      /> */}
     </Flex>
   );
 }
